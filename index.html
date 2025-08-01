@@ -12,13 +12,21 @@
 <body>
   <div class="container">
     <h1>😊 Smile to Stop Alarm 🔔</h1>
+   
+
 
     <video id="webcam" width="300" height="225" autoplay playsinline></video>
 
     <p id="result">Waiting for detection...</p>
-    <button id="retryBtn" onclick="retry()">Try Again</button>
+    <div class="button-group">
+  <button id="retryBtn" onclick="retry()">Try Again</button>
+  <a href="setalarm.html">
+    <button class="set-alarm-btn">Set Alarm</button>
+  </a>
+</div>
 
-    <audio id="alarm" src="alarm.mp3" loop autoplay></audio>
+
+    <audio id="alarm" src="alarm.mp3" ></audio>
   </div>
 
   <script>
@@ -67,10 +75,10 @@
 
           const className = topPrediction.className;
           const probability = topPrediction.probability;
-          console.log(`Prediction: ${className} (${Math.round(probability * 100)}%)`);
+          
 
           if ((className === "Class 1" || className === "Class 3") && probability > 0.9) {
-  resultEl.textContent = `${className} detected with ${Math.round(probability * 100)}%! Alarm Stopped!`;
+  resultEl.textContent = `  Alarm Stopped!`;
 
   if (!alarm.paused) {
     alarm.pause();
@@ -79,7 +87,7 @@
   clearInterval(predictionInterval);
   retryBtn.style.display = "block";
 } else {
-  resultEl.textContent = `Detected: ${className} (${Math.round(probability * 100)}%). Keep smiling!`;
+  resultEl.textContent = ` Keep smiling!`;
 
   if (alarm.paused) {
     alarm.play();
@@ -101,8 +109,20 @@
         init();
       }
     }
+     window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const shouldPlay = urlParams.get("playAlarm");
 
-    init();
+    if (shouldPlay === "true") {
+      init(); // ✅ Only run init when redirected with playAlarm=true
+    } else {
+      console.log("Alarm not triggered — opened directly.");
+    }
+  };
+  
+
+
+    
   </script>
 </body>
 </html>
