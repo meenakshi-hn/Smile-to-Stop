@@ -42,49 +42,66 @@ https://smile-to-stop-sfw7.vercel.app/ ->follow this link
 For Software:
 
 # Screenshots (Add at least 3)
+![alt text](<Screenshot 2025-08-02 060330.png>)-face detection to stop alarm
+
+![alt text](<Screenshot 2025-08-02 060121.png>)-to set alarm time
 
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
 
 # Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
+   ┌─────────────┐
+   │ User opens  │
+   │ alarm.html  │
+   └────┬────────┘
+        │
+        ▼
+┌────────────────────┐
+│ User sets time via │
+│ <input type="time">│
+└────────┬───────────┘
+         │
+         ▼
+ ┌───────────────────┐
+ │ Clicks "Set Alarm"│
+ └────────┬──────────┘
+          │
+          ▼
+ ┌────────────────────────────┐
+ │ JS stores selected time    │
+ │ and starts setInterval     │
+ └────────┬───────────────────┘
+          │
+          ▼
+ ┌────────────────────────────┐
+ │ Every second, check        │
+ │ current time == alarm time?│
+ └────────┬───────────┬───────┘
+          │           │
+          │No         │Yes
+          ▼           ▼
+     (keep checking) ┌─────────────────────┐
+                     │ Play alarm sound    │
+                     │ Show message        │
+                     └────────┬────────────┘
+                              ▼
+                     ┌─────────────────────┐
+                     │ Redirect to         │
+                     │ index.html          │
+                     └─────────────────────┘
 
-For Hardware:
 
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
 
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
 
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+<video controls src="20250802-0125-41.3393231.mp4" title="Title"></video>
+When we click on set alarm button it will redirect to a page to set the time to hit the alarm.Alarm rings at that time and when simling face is detected the alarm stops ringing.
 
-# Additional Demos
-[Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- Meenakshi H N: Whole project
+- Krishna P:Whole project
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
