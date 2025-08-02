@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Set Alarm</title>
+  
+  <link rel="stylesheet" href="style.css" />
+ <style>
+ 
+  input, button {
+    font-size: 25px;
+    padding: 8px 12px;
+    margin-top: 05px;
+
+  }
+
+  h1 {
+    margin-bottom: 40px;
+    
+  }
+</style>
+
+</head>
+<body>
+
+  <<h1>Set Alarm</h1>
+
+<input type="time" id="alarmTime">
+<br><br>
+<button class="set-alarm-btn" onclick="setAlarm()">Set Alarm</button>
+
+  <audio id="alarmSound" src="alarm.mp3" preload="auto"></audio>
+
+  <script>
+let alarmSet = false;
+let alarmTime = null;
+const alarmAudio = document.getElementById("alarmSound");
+
+function setAlarm() {
+  alarmTime = document.getElementById("alarmTime").value;
+  if (!alarmTime) {
+    alert("Please choose a time.");
+    return;
+  }
+  alarmSet = true;
+  alert("Alarm set for " + alarmTime);
+  document.getElementById("message").innerText = "⏰ Alarm is set for " + alarmTime;
+}
+
+// Check time every second
+setInterval(() => {
+  if (alarmSet) {
+    const now = new Date();
+    const currentTime = now.toTimeString().slice(0, 5); // HH:MM
+    if (currentTime === alarmTime) {
+      alarmAudio.play().then(() => {
+        document.getElementById("message").innerText = "⏰ Alarm is ringing!";
+        setTimeout(() => {
+          window.location.href = "setalarm.html?playAlarm=true";
+        }, 1000); // Redirect after 1 second
+      }).catch((e) => {
+        console.log("Autoplay failed or blocked:", e);
+        window.location.href = "index.html?playAlarm=true";
+      });
+
+      alarmSet = false;
+    }
+  }
+}, 1000);
+</script>
+
+
+
+
+</body>
+</html>

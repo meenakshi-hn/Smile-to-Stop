@@ -1,48 +1,43 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# Smile to Stop🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: Challengers
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Meenakshi H N-lbsitw
+- Member 2: Krishna P -lbsitw
 
 ### Project Description
-[2-3 lines about what your project does]
+
+Smile to Stop is a fun and quirky project that turns off your alarm only when you smile.Instead of hitting a snooze button, you’re forced to smile at your screen — literally! The alarm keeps ringing until your face detection camera catches a genuine smile.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+In today’s fast-paced digital world, many individuals struggle with stress, anxiety, and irregular sleeping patterns. While alarm clocks are essential for staying punctual, the abrupt and often harsh nature of alarms can negatively affect a person's mood at the start of the day.
+
+
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+For lazy people to wake up from bed.The "Smile-to-Stop Alarm System" introduces an innovative approach to stopping alarms—facial recognition powered by smile detection. This web-based application sets an alarm using a user-defined time and activates the webcam at the alarm moment.
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- Html,css,javascript
+- Teachable machine
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+
 
 ### Implementation
 For Software:
-# Installation
-[commands]
 
 # Run
-[commands]
-
+Open index.html directly in a browser (right-click → open with → browser)
+https://smile-to-stop-sfw7.vercel.app/ ->follow this link
 ### Project Documentation
 For Software:
 
