@@ -1,128 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smile to Stop</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.9.0/dist/tf.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Set Alarm</title>
+  
+  <link rel="stylesheet" href="style.css" />
+ <style>
+ 
+  input, button {
+    font-size: 25px;
+    padding: 8px 12px;
+    margin-top: 05px;
 
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+  }
+
+  h1 {
+    margin-bottom: 40px;
+    
+  }
+</style>
+
 </head>
 <body>
-  <div class="container">
-    <h1>🔔 Smile to Stop 🔔</h1>
-   
 
+  <<h1>Set Alarm</h1>
 
-    <video id="webcam" width="300" height="225" autoplay playsinline></video>
+<input type="time" id="alarmTime">
+<br><br>
+<button class="set-alarm-btn" onclick="setAlarm()">Set Alarm</button>
 
-    <p id="result">Waiting for detection...</p>
-    <div class="button-group">
-  <button id="retryBtn" onclick="retry()">Try Again</button>
-  <a href="setalarm.html">
-    <button class="set-alarm-btn">Set Alarm</button>
-  </a>
-</div>
-
-
-    <audio id="alarm" src="alarm.mp3" ></audio>
-  </div>
+  <audio id="alarmSound" src="alarm.mp3" preload="auto"></audio>
 
   <script>
-    const URL = "model/";
-    let model, webcamStream, predictionInterval;
-    const resultEl = document.getElementById("result");
-    const alarm = document.getElementById("alarm");
-    const retryBtn = document.getElementById("retryBtn");
-    const video = document.getElementById("webcam");
+let alarmSet = false;
+let alarmTime = null;
+const alarmAudio = document.getElementById("alarmSound");
 
-    async function init() {
-      try {
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
-        model = await tmImage.load(modelURL, metadataURL);
-      } catch (e) {
-        console.warn("Model not found or not trained yet.");
-      }
-
-      try {
-        webcamStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        video.srcObject = webcamStream;
-      } catch (err) {
-        alert("Camera access denied or not available.");
-        console.error(err);
-        return;
-      }
-
-      if (model) {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = 300;
-        canvas.height = 225;
-
-        predictionInterval = setInterval(async () => {
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const predictions = await model.predict(canvas);
-
-          console.log(predictions);
-
-
-          // Find the class with highest confidence
-          let topPrediction = predictions.reduce((prev, curr) =>
-            curr.probability > prev.probability ? curr : prev
-          );
-
-          const className = topPrediction.className;
-          const probability = topPrediction.probability;
-          
-
-          if ((className === "Class 1" || className === "Class 3") && probability > 0.9) {
-  resultEl.textContent = `  Alarm Stopped!`;
-
-  if (!alarm.paused) {
-    alarm.pause();
+function setAlarm() {
+  alarmTime = document.getElementById("alarmTime").value;
+  if (!alarmTime) {
+    alert("Please choose a time.");
+    return;
   }
-
-  clearInterval(predictionInterval);
-  retryBtn.style.display = "block";
-} else {
-  resultEl.textContent = ` Keep smiling!`;
-
-  if (alarm.paused) {
-    alarm.play();
-  }
+  alarmSet = true;
+  alert("Alarm set for " + alarmTime);
+  document.getElementById("message").innerText = "⏰ Alarm is set for " + alarmTime;
 }
 
-        }, 300);
-      }
+// Check time every second
+setInterval(() => {
+  if (alarmSet) {
+    const now = new Date();
+    const currentTime = now.toTimeString().slice(0, 5); // HH:MM
+    if (currentTime === alarmTime) {
+      alarmAudio.play().then(() => {
+        document.getElementById("message").innerText = "⏰ Alarm is ringing!";
+        setTimeout(() => {
+          window.location.href = "index.html?playAlarm=true";
+        }, 1000); // Redirect after 1 second
+      }).catch((e) => {
+        console.log("Autoplay failed or blocked:", e);
+        window.location.href = "index.html?playAlarm=true";
+      });
 
-      alarm.play();
-      retryBtn.style.display = "none";
+      alarmSet = false;
     }
-
-    function retry() {
-      resultEl.textContent = "Waiting for detection...";
-      alarm.play();
-      retryBtn.style.display = "none";
-      if (model && webcamStream) {
-        init();
-      }
-    }
-     window.onload = function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const shouldPlay = urlParams.get("playAlarm");
-
-    if (shouldPlay === "true") {
-      init(); // ✅ Only run init when redirected with playAlarm=true
-    } else {
-      console.log("Alarm not triggered — opened directly.");
-    }
-  };
-  
+  }
+}, 1000);
+</script>
 
 
-    
-  </script>
+
+
 </body>
 </html>
